@@ -2,25 +2,27 @@ pipeline {
     agent any
 
     stages {
+
+        stage('Debug') {
+            steps {
+                bat 'where python'
+                bat 'where pip'
+                bat 'echo %PATH%'
+            }
+        }
+
         stage('Install') {
             steps {
-                bat '"C:/Program Files/Python313/pip.exe" install -r requirements.txt'
+                bat '"C:/Program Files/Python313/Scripts/pip.exe" install -r requirements.txt'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'python -m pytest --junitxml=results.xml'
-            }
-        }
-        stage('Debug') {
-            steps {
-                bat 'where python'
-                bat 'echo %PATH%'
+                bat '"C:/Program Files/Python313/python.exe" -m pytest --junitxml=results.xml'
             }
         }
     }
-    
 
     post {
         always {
