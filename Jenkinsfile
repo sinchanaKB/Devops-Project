@@ -3,12 +3,13 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-                sh 'pip install -r requirements.txt'[cite: 4]
+                // Ensure this line is clean and inside single quotes
+                sh 'pip install -r requirements.txt'
             }
         }
         stage('Test') {
             steps {
-                // Runs tests and generates the 'test reports' required
+                // Runs pytest and creates the report file
                 sh 'pytest --junitxml=results.xml'
             }
             post {
@@ -20,8 +21,7 @@ pipeline {
         }
         stage('Build & Package') {
             steps {
-                // This only runs if the 'Test' stage passes.
-                // It creates the 'Validated Docker image'
+                // This builds your "Validated Docker image"
                 sh 'docker build -t bus-system-app:latest .'
             }
         }
