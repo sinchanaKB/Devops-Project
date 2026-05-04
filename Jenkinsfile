@@ -4,7 +4,7 @@ pipeline {
         stage('Install') {
             steps {
                 // Ensure this line is clean and inside single quotes
-                sh '"C:\Program Files\Python313\Scripts\pip.exe" install -r requirements.txt'
+                sh '"C:/Program Files/Python313/Scripts/pip.exe" install -r requirements.txt'
             }
         }
         stage('Test') {
