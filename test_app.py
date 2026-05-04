@@ -13,4 +13,7 @@ def test_buses_route(client):
     response = client.get('/buses')
     # If the DB is not connected, it might return 500, 
     # but for a 'Green' pipeline, we want to see 200.
-    assert response.status_code in [200, 500]
+
+def test_home(client):
+    response = client.get('/')
+    assert response.status_code == 200
