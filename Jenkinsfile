@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-                bat '"C:/Program Files/Python313/Scripts/pip.exe" install -r requirements.txt'
+                bat '"C:/Program Files/Python313/pip.exe" install -r requirements.txt'
             }
         }
 
@@ -13,7 +13,14 @@ pipeline {
                 bat 'python -m pytest --junitxml=results.xml'
             }
         }
+        stage('Debug') {
+            steps {
+                bat 'where python'
+                bat 'echo %PATH%'
+            }
+        }
     }
+    
 
     post {
         always {
