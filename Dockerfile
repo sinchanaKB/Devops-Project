@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 # The core issue last time was missing the native Linux ODBC drivers!
 # These steps download the Microsoft keys and install the ODBC Driver 17 for SQL Server on Debian.
