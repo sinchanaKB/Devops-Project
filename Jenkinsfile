@@ -14,6 +14,13 @@ pipeline {
                 bat '"C:/Program Files/Python313/python.exe" -m pytest --junitxml=results.xml'
             }
         }
+
+        stage('Build & Package') {
+            steps {
+                // This builds the image only if the Test stage above passed
+                bat 'docker build -t bus-system-app:latest .'
+            }
+        }
     }
 
     post {
