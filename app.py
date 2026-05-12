@@ -22,7 +22,7 @@ def get_db_connection():
     if db_user and db_pass:
         conn_str = f'''
         DRIVER={{ODBC Driver 17 for SQL Server}};
-        SERVER=host.docker.internal;
+        SERVER=192.168.102.231;
         DATABASE=bus_system;
         UID=sa;
         PWD=StrongPassword@123;
