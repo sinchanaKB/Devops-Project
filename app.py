@@ -7,24 +7,40 @@ app = Flask(__name__)
 # To connect from a Linux Docker container, this gets overridden by docker-compose.yml to 'host.docker.internal'.
 # When running locally on Windows, it defaults to your actual server name!
 DB_SERVER = os.environ.get('DB_SERVER', r'host.docker.internal,1433')
-DB_NAME = os.environ.get('DB_NAME', 'employee')
+DB_NAME = os.environ.get('DB_NAME', 'bus_system')
 
 def get_db_connection():
+    import os
+
+    db_server = os.environ.get('DB_SERVER')
+    db_name = os.environ.get('DB_NAME', 'bus_system')
     db_user = os.environ.get('DB_USER')
     db_pass = os.environ.get('DB_PASS')
-    
-    # If username and password are provided (like in Docker via SQL Auth), use them.
-    # Otherwise, fallback to Windows Authentication (perfect for running natively).
+
+    print("DEBUG DB_SERVER:", db_server)  # optional
+
     if db_user and db_pass:
-        conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER=host.docker.internal,1433;DATABASE=employee ;UID=sa;PWD=StrongPassword@123;TrustServerCertificate=yes;'
+        conn_str = f'''
+        DRIVER={{ODBC Driver 17 for SQL Server}};
+        SERVER=host.docker.internal;
+        DATABASE=bus_system;
+        UID=sa;
+        PWD=StrongPassword@123;
+        TrustServerCertificate=yes;
+        '''
     else:
-        conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={DB_SERVER};DATABASE={DB_NAME};Trusted_Connection=yes;'
-        
+        conn_str = f'''
+        DRIVER={{ODBC Driver 17 for SQL Server}};
+        SERVER={db_server};
+        DATABASE={db_name};
+        Trusted_Connection=yes;
+        '''
+
     return pyodbc.connect(conn_str)
 
 @app.route('/')
 def home():
-    return "SQL Server Reader App is Running! Visit http://localhost:5001/employees to view data."
+    return "SQL Server Reader App is Running! Visit http://localhost:5000/buses to view data."
 
 @app.route('/buses')
 def get_buses():
