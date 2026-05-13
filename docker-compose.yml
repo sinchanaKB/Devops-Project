@@ -2,16 +2,22 @@ version: '3.8'
 
 services:
   app:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
+
+    container_name: flask_bus_app
+
     ports:
       - "5001:5000"
+
     environment:
-      # Connects directly to your host's SQL Express using host.docker.internal
-      - DB_SERVER=host.docker.internal\SQLEXPRESS
-      - DB_NAME=bus_system
-      - DB_USER=sa
-      - DB_PASS=StrongPassword@123  # CHANGE THIS TO YOUR ACTUAL PASSWORD
+      DB_SERVER: host.docker.internal,1433
+      DB_NAME: bus_system
+      DB_USER: sa
+      DB_PASS: StrongPassword@123
+
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+    restart: always
